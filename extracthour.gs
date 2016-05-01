@@ -1,5 +1,5 @@
-  // mettre son identifiant CLUSTER
-  var cluster = "demo";
+
+  var cluster = "d0a293dc77667c9328783d489c8cef73";
 
 
 
@@ -8,18 +8,20 @@ function buildnewsave () {
  if (season['status'] == 'ok' && season['data'][0]['status'] == 'ACTIVE' ) {
   var season_id = season['data'][0]['season_id'];
 } 
- var fronts = getWargamingAPI("https://api.worldoftanks.eu/wot/globalmap/fronts/?application_id=" + cluster);
+  var fronts = getWargamingAPI("https://api.worldoftanks.eu/wot/globalmap/fronts/?application_id=" + cluster);
+  var parametresfront =  {};
+  var parametresprovince =  {};
+  var savecomplete =  {};
   fronts['data'].forEach (function (front) {		
   var frontid =  front['front_id']	;
   var k = 0;
   var j= 0;
   var provinces = {};
-  var parametresprovince =  [];
-  var propertiesofprovince =  [];
+  var propertiesofprovince =  {};
   var provinces_status = "ok";
   var provinces_meta_count = 100;
   var nbprovfront = 0;    
-  var parametresprovince =  {};
+
   while (provinces_status == 'ok' && provinces_meta_count > 0) {
     j++;
     provinces = getWargamingAPI("https://api.worldoftanks.eu/wot/globalmap/provinces/?application_id=" + cluster + "&language=en&front_id=" +frontid + "&page_no=" + j);
@@ -35,18 +37,33 @@ function buildnewsave () {
       propertiesofprovince =  {
         'arena_name' : province['arena_name'],
         'province_name' : province['province_name'],
-        'province_id' : province['province_id']        
+        'province_id' : province['province_id'],
+        'front_name' : province['front_name'],     
+        'prime_time' : province['prime_time'],     
+        'server' : province['server'],     
+        'status' : province['status'],     
+        'daily_revenue' : province['daily_revenue'],     
+        'revenue_level' : province['revenue_level'],     
+        'owner_clan_id' : province['owner_clan_id'],     
+        'landing_type' : province['landing_type'],     
+        'uri' : province['uri'],     
+        'active_battles' : province['active_battles'],     
+        'attackers' : province['attackers'],     
+        'competitors' : province['competitors'],     
+        'pillage' : province['pillage'],           
       }
       parametresprovince[provinceencours] = propertiesofprovince;
     })
   }
     Logger.log("nombre province traité pour le front : " + nbprovfront);
-    //var jsontobuild = {parametresprovince};
-    //Logger.log("result : " + JSON.stringify(parametresprovince));
-     var jsonString = JSON.stringify(parametresprovince);
-     Logger.log("jsonString: " + jsonString);
-    setJsonFile("extraction",jsonString )    
-  }) 
+    parametresfront[frontid] =  front;
+  })
+  var savecomplete = {
+    'front' : parametresfront,
+    'provinces' : parametresprovince,
+  };
+  var jsonString = JSON.stringify(savecomplete);
+  setJsonFile("extraction",jsonString ) 
 }
 
 
@@ -69,15 +86,14 @@ function getWargamingAPI(urlwargaming) {
 
 // Sauvegarde du JSON  
 function setJsonFile(Filename, output ) {
- var files = DriveApp.getFilesByName(Filename);
- while (files.hasNext()) {
-   var file = files.next();
-   Logger.log(file.getName());
-   delete(file.getId());
- }
-
   var Folder =DriveApp.getFoldersByName("EXTRACT");
   var premierFolder = Folder.next();
+  var files = premierFolder.getFilesByName(Filename+ ".json");
+  while (files.hasNext()) {
+    var file = files.next();
+    Logger.log('fichier a supprimer : ' + file.getId());
+    Drive.Files.remove(file.getId())
+  }
   premierFolder.createFile(Filename + ".json", output, MimeType.PLAIN_TEXT);
 
 }
