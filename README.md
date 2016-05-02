@@ -2,14 +2,12 @@
 
 GOOGLEAPP: EXTRACTHOUR
 ----------------------
-----------------------
 
 This is a script scheduled by time (1 times per hour actually) on my google Drive account.
 He make a refresh of the map (building EXTRACT/extraction.json)
 He make a refresh of new clans (Update DATA/anuaireClan.json)
 
 Google Script into EXTRACTHOUR
-------------------------------
 
 start.gs => script scheduled every hour . calling extracthour.gs , then annuaire.gs
 
