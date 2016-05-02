@@ -16,3 +16,11 @@ GOOGLEAPP: SAVEMAP
 ------------------
 Daily save of extraction.json betwwen 2 and 3 morning.
 ***dailySave.gs : copy file.
+
+GOOGLEAPP: MAPBUILD
+------------------
+Not scheduled yet...
+***season.gs : call the Season active to wargaming, and lokk if map was build. If not call the mapbuild script and update file season in directory DATA.
+***mapbuild/gs : build a file Named by season id in directory MAP
+***function : method used by script (read, write, call wargaming).
+
