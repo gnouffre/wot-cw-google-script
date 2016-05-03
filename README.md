@@ -24,3 +24,9 @@ Not scheduled yet...
 ***mapbuild/gs : build a file Named by season id in directory MAP
 ***function : method used by script (read, write, call wargaming).
 
+GOOGLEAPP: SHOWMAP
+------------------
+Contains Script used for interaction with HTML page.
+***function.gs : commun function + entry point
+***getList.gs : contain each function called by entry point.
+***dailySave.gs : copy file.
