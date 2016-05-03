@@ -30,3 +30,11 @@ Contains Script used for interaction with HTML page.
 ***function.gs : commun function + entry point
 ***getList.gs : contain each function called by entry point.
 ***dailySave.gs : copy file.
+
+Function : 
+  CLANLIST => get json of all clan on map since start of application 
+  SEASONLIST => get json of all season
+  MAP => get geojson of map of the seasonid used as parameter
+  LOADSAVE => get json of the save used as parameter
+  ALLSAVE => get json of list of save since start of application
+  BATTLETURNINFO => get json of all battleturn of a province.
