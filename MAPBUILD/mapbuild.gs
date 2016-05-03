@@ -6,7 +6,7 @@ var DirMap = 'MAP';
 function mapBuild(season_id) {
   Logger.log('mapbuild: ');
   var mapbuild = [];
-  var FileMap = season_id + '.json';
+  var FileMap = season_id + '.geojson';
   var SaveContent =  getJsonFile(DirSave, FileSave );
   var Savelist = JSON.parse(SaveContent);
   var provinceList = Savelist["provinces"];
